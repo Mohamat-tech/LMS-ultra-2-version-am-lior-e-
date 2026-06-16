@@ -586,13 +586,37 @@ select.form-control{cursor:pointer}
 .ni-sub{font-size:.75rem;color:var(--text4)}
 
 /* ── MODAL ── */
-.modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.45);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity var(--transition)}
+.modal-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(0,0,0,.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  display:flex;align-items:flex-start;justify-content:center;
+  padding:1rem;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  opacity:0;pointer-events:none;transition:opacity var(--transition);
+}
 .modal-overlay.open{opacity:1;pointer-events:all}
-.modal-box{background:var(--card);border-radius:var(--r-2xl);width:100%;max-width:440px;box-shadow:var(--shadow-xl);transform:translateY(24px) scale(.97);transition:transform var(--transition);overflow:hidden}
+.modal-box{
+  background:var(--card);border-radius:var(--r-2xl);width:100%;max-width:460px;
+  box-shadow:var(--shadow-xl);
+  transform:translateY(24px) scale(.97);transition:transform var(--transition);
+  overflow:hidden;
+  display:flex;flex-direction:column;
+  margin:auto 0;
+  /* Allow box to grow but not exceed viewport */
+  max-height:none;
+}
 .modal-overlay.open .modal-box{transform:none}
-.modal-head{padding:1.4rem 1.75rem 0;display:flex;align-items:flex-start;justify-content:space-between}
-.modal-title{font-size:1.25rem;font-weight:800;letter-spacing:-.02em}
-.modal-body{padding:1.25rem 1.75rem 1.75rem}
+.modal-head{
+  padding:1rem 1.25rem;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;
+  background:var(--card);z-index:10;
+  flex-shrink:0;
+}
+.modal-title{font-size:1.1rem;font-weight:800;letter-spacing:-.02em}
+.modal-body{padding:1.1rem 1.25rem 1.75rem;overflow-y:visible}
 .modal-tabs{display:flex;background:var(--bg);border-radius:var(--r);padding:.3rem;gap:.25rem;margin:.9rem 0 1.25rem}
 .mt{flex:1;text-align:center;padding:.45rem;border-radius:var(--r-sm);font-size:.83rem;font-weight:600;color:var(--text3);cursor:pointer;transition:all var(--transition)}
 .mt.active{background:var(--blue);color:#fff;box-shadow:0 2px 8px rgba(0,122,255,.3)}
@@ -684,7 +708,24 @@ select.form-control{cursor:pointer}
   .hero{padding:7.5rem 1rem 3rem}
   .hero-cta{flex-direction:column;align-items:stretch}
   .releve-summary{grid-template-columns:1fr}
-  .modal-box{max-width:100%}
+  /* Modal full screen on mobile */
+  .modal-overlay{
+    padding:.5rem .5rem env(safe-area-inset-bottom,.5rem);
+    align-items:flex-start;
+  }
+  .modal-box{
+    max-width:100%;
+    border-radius:var(--r-xl);
+    margin-top:auto;
+    margin-bottom:auto;
+  }
+  .modal-head{padding:.9rem 1rem;}
+  .modal-body{padding:1rem 1rem 2rem;}
+  /* Stack role grid on very small */
+  .role-grid{grid-template-columns:repeat(3,1fr)}
+  .cert-step{padding:.7rem .8rem}
+  .cert-step .cs-title{font-size:.82rem}
+  .cert-step .cs-desc{font-size:.72rem}
 }
 </style>
 </head>
@@ -696,9 +737,9 @@ select.form-control{cursor:pointer}
     <div class="modal-head">
       <div>
         <div class="modal-title" id="authTitle">Bienvenue sur EduVault</div>
-        <div style="font-size:.82rem;color:var(--text4);margin-top:.2rem">Votre plateforme académique</div>
+        <div style="font-size:.78rem;color:var(--text4);margin-top:.1rem">Votre plateforme académique</div>
       </div>
-      <button class="btn btn-ghost btn-icon" onclick="closeModal('authModal')"><i class="fa fa-xmark"></i></button>
+      <button onclick="closeModal('authModal')" style="width:32px;height:32px;border-radius:50%;background:var(--bg);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:.9rem;flex-shrink:0;transition:all .2s" onmouseover="this.style.background='var(--red-bg)';this.style.color='var(--red)'" onmouseout="this.style.background='var(--bg)';this.style.color='var(--text3)'"><i class="fa fa-xmark"></i></button>
     </div>
     <div class="modal-body">
       <div class="modal-tabs">
